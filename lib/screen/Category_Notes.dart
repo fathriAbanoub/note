@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:notes/const/colors.dart'; // Ensure this import is correct based on your project structure
+
 import 'package:notes/data/firestore.dart';
 import 'package:notes/screen/t.dart';
 
@@ -8,7 +8,7 @@ class add_Note extends StatefulWidget {
   final String categoryId;
   final String categoryName;
 
-  add_Note({required this.categoryId, required this.categoryName});
+  const add_Note({super.key, required this.categoryId, required this.categoryName});
 
   @override
   _add_NoteState createState() => _add_NoteState();
@@ -32,7 +32,7 @@ class _add_NoteState extends State<add_Note> {
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
 
           final notes = snapshot.data!.docs;
@@ -65,7 +65,7 @@ class _add_NoteState extends State<add_Note> {
                   title: Text(noteTitle),
                   subtitle: Text(noteSubtitle),
                   trailing: IconButton(
-                    icon: Icon(Icons.edit, color: Colors.red),
+                    icon: const Icon(Icons.edit, color: Colors.red),
                     onPressed: () => _editNote(
                         noteId, noteTitle, noteSubtitle, noteImageIndex),
                   ),
@@ -79,11 +79,11 @@ class _add_NoteState extends State<add_Note> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => NotesPage()),
+            MaterialPageRoute(builder: (context) =>  NotesPage(categoryId: widget.categoryId, categoryName: widget.categoryName)),
           );
         },
         backgroundColor: Colors.blueAccent,
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

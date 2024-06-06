@@ -13,8 +13,8 @@ class _Add_ScreenState extends State<Add_Screen> {
   final title = TextEditingController();
   final subtitle = TextEditingController();
 
-  FocusNode _focusNode1 = FocusNode();
-  FocusNode _focusNode2 = FocusNode();
+  final FocusNode _focusNode1 = FocusNode();
+  final FocusNode _focusNode2 = FocusNode();
   int indxx = 0;
 
   @override
@@ -23,18 +23,18 @@ class _Add_ScreenState extends State<Add_Screen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
-        title: Text('Добавить заметку'),
+        title: const Text('Add a note'),
       ),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             tittle_widgets(),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             subtitle_wedgite(),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             imagess(),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             button(),
           ],
         ),
@@ -51,14 +51,14 @@ class _Add_ScreenState extends State<Add_Screen> {
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.greenAccent,
-              minimumSize: Size(170, 48),
+              minimumSize: const Size(170, 48),
             ),
             onPressed: () {
               Firestore_Datasource().AddNote(subtitle.text,title.text, indxx);
               Navigator.pop(context);
             },
-            child: Text(
-              'Добавь',
+            child: const Text(
+              'Add',
               style: TextStyle(color: Colors.white),
             ),
           ),
@@ -68,13 +68,13 @@ class _Add_ScreenState extends State<Add_Screen> {
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.redAccent,
-              minimumSize: Size(170, 48),
+              minimumSize: const Size(170, 48),
             ),
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text(
-              'Отменить',
+            child: const Text(
+              'Cancel',
               style: TextStyle(color: Colors.white),
             ),
           ),
@@ -83,8 +83,8 @@ class _Add_ScreenState extends State<Add_Screen> {
     );
   }
 
-  Container imagess() {
-    return Container(
+  SizedBox imagess() {
+    return SizedBox(
       height: 180,
       child: ListView.builder(
         itemCount: 5,
@@ -105,7 +105,7 @@ class _Add_ScreenState extends State<Add_Screen> {
                 ),
               ),
               width: 140,
-              margin: EdgeInsets.all(8),
+              margin: const EdgeInsets.all(8),
               child: Column(
                 children: [
                   Image.asset('images/$index.png'),
@@ -123,19 +123,19 @@ class _Add_ScreenState extends State<Add_Screen> {
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Container(
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 255, 255, 255),
+          color: const Color.fromARGB(255, 255, 255, 255),
           borderRadius: BorderRadius.circular(15),
         ),
         child: TextField(
           controller: title,
           focusNode: _focusNode1,
-          style: TextStyle(fontSize: 18, color: Colors.black),
+          style: const TextStyle(fontSize: 18, color: Colors.black),
           decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-            hintText: 'название заметки',
+            contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            hintText: 'Title',
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                 color: Colors.blueAccent,
                 width: 2.0,
               ),
@@ -158,20 +158,20 @@ class _Add_ScreenState extends State<Add_Screen> {
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Container(
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 255, 255, 255),
+          color: const Color.fromARGB(255, 255, 255, 255),
           borderRadius: BorderRadius.circular(15),
         ),
         child: TextField(
           maxLines: 3,
           controller: subtitle,
           focusNode: _focusNode2,
-          style: TextStyle(fontSize: 18, color: Colors.black),
+          style: const TextStyle(fontSize: 18, color: Colors.black),
           decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-            hintText: 'Введите свою заметку',
+            contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            hintText: 'Description',
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                 color: Colors.blueAccent,
                 width: 2.0,
               ),

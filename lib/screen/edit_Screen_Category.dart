@@ -6,7 +6,7 @@ import '../model/Category_Model.dart';
 class Edit_Screen_Category extends StatefulWidget {
   final Note1 _note;
 
-  Edit_Screen_Category(this._note, {super.key});
+  const Edit_Screen_Category(this._note, {super.key});
 
   @override
   State<Edit_Screen_Category> createState() => _Edit_Screen_CategoryState();
@@ -17,8 +17,8 @@ class _Edit_Screen_CategoryState extends State<Edit_Screen_Category> {
   TextEditingController? subtitle;
   TextEditingController? categoryId;
 
-  FocusNode _focusNode1 = FocusNode();
-  FocusNode _focusNode2 = FocusNode();
+  final FocusNode _focusNode1 = FocusNode();
+  final FocusNode _focusNode2 = FocusNode();
   int indexx = 0;
 
   @override
@@ -36,18 +36,18 @@ class _Edit_Screen_CategoryState extends State<Edit_Screen_Category> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
-        title: Text('Изменить заметку'), // Changed the app bar title
+        title: const Text('Изменить заметку'), // Changed the app bar title
       ),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             tittle_widgets(),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             subtitle_wedgite(),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             imagess(),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             button(),
           ],
         ),
@@ -64,18 +64,18 @@ class _Edit_Screen_CategoryState extends State<Edit_Screen_Category> {
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.greenAccent,
-              minimumSize: Size(170, 48),
+              minimumSize: const Size(170, 48),
             ),
             onPressed: () {
               Firestore_Datasource().updateNoteInCategory(
-                  widget._note.categoryId!,
+                  widget._note.categoryId,
                   widget._note.id,
                   indexx,
                   title!.text,
                   subtitle!.text); // Call the updateNoteInCategory method
               Navigator.pop(context);
             },
-            child: Text(
+            child: const Text(
               'Сохранить',
               style: TextStyle(color: Colors.white),
             ),
@@ -86,12 +86,12 @@ class _Edit_Screen_CategoryState extends State<Edit_Screen_Category> {
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.redAccent,
-              minimumSize: Size(170, 48),
+              minimumSize: const Size(170, 48),
             ),
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text(
+            child: const Text(
               'Отменить',
               style: TextStyle(color: Colors.white),
             ),
@@ -101,8 +101,8 @@ class _Edit_Screen_CategoryState extends State<Edit_Screen_Category> {
     );
   }
 
-  Container imagess() {
-    return Container(
+  SizedBox imagess() {
+    return SizedBox(
       height: 180,
       child: ListView.builder(
         itemCount: 5,
@@ -123,7 +123,7 @@ class _Edit_Screen_CategoryState extends State<Edit_Screen_Category> {
                 ),
               ),
               width: 140,
-              margin: EdgeInsets.all(8),
+              margin: const EdgeInsets.all(8),
               child: Column(
                 children: [
                   Image.asset('images/$index.png'),
@@ -141,19 +141,19 @@ class _Edit_Screen_CategoryState extends State<Edit_Screen_Category> {
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Container(
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 255, 255, 255),
+          color: const Color.fromARGB(255, 255, 255, 255),
           borderRadius: BorderRadius.circular(15),
         ),
         child: TextField(
           controller: title,
           focusNode: _focusNode1,
-          style: TextStyle(fontSize: 18, color: Colors.black),
+          style: const TextStyle(fontSize: 18, color: Colors.black),
           decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             hintText: 'название заметки',
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                 color: Colors.blueAccent,
                 width: 2.0,
               ),
@@ -176,20 +176,20 @@ class _Edit_Screen_CategoryState extends State<Edit_Screen_Category> {
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Container(
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 255, 255, 255),
+          color: const Color.fromARGB(255, 255, 255, 255),
           borderRadius: BorderRadius.circular(15),
         ),
         child: TextField(
           maxLines: 3,
           controller: subtitle,
           focusNode: _focusNode2,
-          style: TextStyle(fontSize: 18, color: Colors.black),
+          style: const TextStyle(fontSize: 18, color: Colors.black),
           decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             hintText: 'Введите свою заметку',
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                 color: Colors.blueAccent,
                 width: 2.0,
               ),

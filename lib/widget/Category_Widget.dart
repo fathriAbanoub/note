@@ -8,7 +8,7 @@ class Task_Widget_Category extends StatefulWidget {
   final Note note;
   final String categoryId;
 
-  Task_Widget_Category(this.note, this.categoryId, {super.key});
+  const Task_Widget_Category(this.note, this.categoryId, {super.key});
 
   @override
   State<Task_Widget_Category> createState() => _Task_Widget_CategoryState();
@@ -38,7 +38,7 @@ class _Task_Widget_CategoryState extends State<Task_Widget_Category> {
               color: Colors.grey.withOpacity(0.2),
               spreadRadius: 5,
               blurRadius: 7,
-              offset: Offset(0, 2),
+              offset: const Offset(0, 2),
             ),
           ],
         ),
@@ -48,7 +48,7 @@ class _Task_Widget_CategoryState extends State<Task_Widget_Category> {
             children: [
               // Image
               imageee(),
-              SizedBox(width: 20),
+              const SizedBox(width: 20),
               // Title and subtitle
               Expanded(
                 child: Column(
@@ -60,7 +60,7 @@ class _Task_Widget_CategoryState extends State<Task_Widget_Category> {
                       children: [
                         Text(
                           widget.note.title,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
@@ -83,16 +83,16 @@ class _Task_Widget_CategoryState extends State<Task_Widget_Category> {
                         )
                       ],
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text(
                       widget.note.subtitle,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                         color: Colors.blueGrey,
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     edit_time(),
                   ],
                 ),
@@ -124,10 +124,10 @@ class _Task_Widget_CategoryState extends State<Task_Widget_Category> {
               child: Row(
                 children: [
                   Image.asset('images/icon_time.png'),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Text(
                     widget.note.time,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -137,7 +137,7 @@ class _Task_Widget_CategoryState extends State<Task_Widget_Category> {
               ),
             ),
           ),
-          SizedBox(width: 20),
+          const SizedBox(width: 20),
           GestureDetector(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
@@ -148,7 +148,7 @@ class _Task_Widget_CategoryState extends State<Task_Widget_Category> {
               width: 90,
               height: 28,
               decoration: BoxDecoration(
-                color: Color(0xffE2F6F1),
+                color: const Color(0xffE2F6F1),
                 borderRadius: BorderRadius.circular(18),
               ),
               child: Padding(
@@ -159,8 +159,8 @@ class _Task_Widget_CategoryState extends State<Task_Widget_Category> {
                 child: Row(
                   children: [
                     Image.asset('images/icon_edit.png'),
-                    SizedBox(width: 10),
-                    Text(
+                    const SizedBox(width: 10),
+                    const Text(
                       'edit',
                       style: TextStyle(
                         fontSize: 14,

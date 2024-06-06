@@ -3,7 +3,7 @@ import 'package:notes/screen/login_Page.dart';
 import 'package:notes/screen/singUP.dart';
 
 class Auth_Page extends StatefulWidget {
-  Auth_Page({super.key});
+  const Auth_Page({super.key});
 
   @override
   State<Auth_Page> createState() => _Auth_PageState();

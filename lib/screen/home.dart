@@ -1,25 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-
+import 'package:notes/const/colors.dart';
 import 'package:notes/screen/Category_Screen.dart';
 import 'package:notes/screen/add_Screen.dart';
-import 'package:notes/widget/stream_note.dart';
+import 'package:notes/data/firestore.dart';
 
+import '../calendar/Calendar.dart';
+import '../calendar/Google_Calendar.dart';
+import '../widget/stream_note.dart';
+
+// ignore: camel_case_types
 class Home_Screen extends StatefulWidget {
   const Home_Screen({super.key});
   @override
   State<Home_Screen> createState() => _Home_ScreenState();
 }
 
+// ignore: camel_case_types
 class _Home_ScreenState extends State<Home_Screen> {
-  @override
   bool show = true;
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Home'),
+        title: const Text('Home'),
         backgroundColor: Colors.blueAccent,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () async {
+              await Firestore_Datasource().signOut();
+              Navigator.of(context).pushReplacementNamed('/');
+            },
+          ),
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
@@ -29,17 +45,17 @@ class _Home_ScreenState extends State<Home_Screen> {
           children: [
             Semantics(
               label:
-                  'главная страница коснитесь дважды для перехода на главную страницу',
+              'главная страница коснитесь дважды для перехода на главную страницу',
               button: true,
               child: Visibility(
                 visible: show,
                 child: FloatingActionButton(
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => CategoryPage(),
+                      builder: (context) => const CategoryPage(),
                     ));
                   },
-                  backgroundColor: Colors.blue,
+                  backgroundColor: Colors.blueAccent,
                   child: const Icon(
                     Icons.home_rounded,
                     color: Colors.white,
@@ -48,15 +64,32 @@ class _Home_ScreenState extends State<Home_Screen> {
               ),
             ),
             Semantics(
+              label: 'кнопка календаря дважды нажмите чтобы активировать',
+              button: true,
+              child: Visibility(
+                visible: show,
+                child: FloatingActionButton(onPressed: (){
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  Calendar_Page(),));
+
+                },
+                    backgroundColor: Colors.blueAccent,
+                    child: const Icon(Icons.calendar_today_rounded,
+                      size: 30,
+                      color: Colors.white,
+                    )
+                ),
+              ),
+            ),
+            Semantics(
               label:
-                  'добавления кнопка коснитесь дважды для добавления заметки',
+              'добавления кнопка коснитесь дважды для добавления заметки',
               button: true,
               child: Visibility(
                 visible: show,
                 child: FloatingActionButton(
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => Add_Screen(),
+                      builder: (context) => const Add_Screen(),
                     ));
                     // Add your add note logic here
                   },
@@ -69,6 +102,7 @@ class _Home_ScreenState extends State<Home_Screen> {
                 ),
               ),
             ),
+
           ],
         ),
       ),
@@ -90,7 +124,9 @@ class _Home_ScreenState extends State<Home_Screen> {
           },
           child: Column(
             children: [
-              Stream_note(false),
+              Stream_note(
+                false,
+              ),
               Text(
                 'isDone',
                 style: TextStyle(
@@ -98,7 +134,9 @@ class _Home_ScreenState extends State<Home_Screen> {
                     color: Colors.grey.shade500,
                     fontWeight: FontWeight.bold),
               ),
-              Stream_note(true),
+              Stream_note(
+                true,
+              ),
             ],
           ),
         ),

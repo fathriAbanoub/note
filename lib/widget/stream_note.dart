@@ -6,8 +6,8 @@ import './task_widgets.dart';
 
 
 class Stream_note extends StatelessWidget {
-  bool done;
-  Stream_note(this.done, {super.key});
+  final bool done;
+  const Stream_note(this.done, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class Stream_note extends StatelessWidget {
         stream: Firestore_Datasource().stream(done),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           }
           final noteslist = Firestore_Datasource().getNotes(snapshot);
           return ListView.builder(

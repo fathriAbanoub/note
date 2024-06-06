@@ -22,8 +22,8 @@ class Firestore_Datasource {
 
   Future<bool> AddNote(String subtitle, String title, int image) async {
     try {
-      var uuid = Uuid().v4();
-      DateTime data = new DateTime.now();
+      var uuid = const Uuid().v4();
+      DateTime data = DateTime.now();
       await _firestore
           .collection('users')
           .doc(_auth.currentUser!.uid)
@@ -88,10 +88,10 @@ class Firestore_Datasource {
     }
   }
 
-  Future<bool> Update_Note(
-      String uuid, int image, String title, String subtitle) async {
+  Future<bool> Update_Note(String uuid, int image, String title,
+      String subtitle) async {
     try {
-      DateTime data = new DateTime.now();
+      DateTime data = DateTime.now();
       await _firestore
           .collection('users')
           .doc(_auth.currentUser!.uid)
@@ -127,7 +127,7 @@ class Firestore_Datasource {
 
   Future<bool> addCategory(String name) async {
     try {
-      var uuid = Uuid().v4();
+      var uuid = const Uuid().v4();
       await _firestore
           .collection('users')
           .doc(_auth.currentUser!.uid)
@@ -176,10 +176,10 @@ class Firestore_Datasource {
     }
   }
 
-  Future<bool> addNoteToCategory(
-      String categoryId, String subtitle, String title, int image) async {
+  Future<bool> addNoteToCategory(String categoryId, String subtitle,
+      String title, int image) async {
     try {
-      var uuid = Uuid().v4();
+      var uuid = const Uuid().v4();
       DateTime now = DateTime.now();
       await _firestore
           .collection('users')
@@ -196,9 +196,10 @@ class Firestore_Datasource {
         'time': '${now.hour}:${now.minute}',
         'title': title,
       });
+      print('Note added to category: $categoryId'); // Added print statement
       return true;
     } catch (e) {
-      print(e);
+      print('Error adding note to category: $e'); // Added print statement
       return false;
     }
   }
@@ -218,7 +219,7 @@ class Firestore_Datasource {
       }).toList();
       return notesList;
     } catch (e) {
-      print(e);
+      print('Error getting category notes: $e'); // Added print statement
       return [];
     }
   }
@@ -240,9 +241,10 @@ class Firestore_Datasource {
         'title': title,
         'image': image,
       });
+      print('Note updated in category: $categoryId'); // Added print statement
       return true;
     } catch (e) {
-      print(e);
+      print('Error updating note in category: $e'); // Added print statement
       return false;
     }
   }
@@ -257,9 +259,10 @@ class Firestore_Datasource {
           .collection('notes')
           .doc(noteId)
           .delete();
+      print('Note deleted from category: $categoryId'); // Added print statement
       return true;
     } catch (e) {
-      print(e);
+      print('Error deleting note from category: $e'); // Added print statement
       return false;
     }
   }
@@ -272,13 +275,57 @@ class Firestore_Datasource {
         .snapshots();
   }
 
-  Stream<QuerySnapshot> streamNotesInCategory(String categoryId) {
-    return _firestore
+  Stream<QuerySnapshot> streamNotesInCategory(String categoryId,
+      {bool? isDone}) {
+    CollectionReference categoryRef = _firestore
         .collection('users')
         .doc(_auth.currentUser!.uid)
         .collection('categories')
         .doc(categoryId)
-        .collection('notes')
-        .snapshots();
+        .collection('notes');
+
+    if (isDone != null) {
+      return categoryRef.where('isDon', isEqualTo: isDone).snapshots();
+    } else {
+      return categoryRef.snapshots();
+    }
+  }
+
+  Future<void> signOut() async {
+    await _auth.signOut();
   }
 }
+class FirestoreDatasource {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  String generateEventId() {
+    return _firestore.collection('events').doc().id;
+  }
+
+  Future<void> addEventToFirestore(String eventId, String eventName, DateTime startDateTime, DateTime endDateTime) async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      await _firestore.collection('events').doc(eventId).set({
+        'eventName': eventName,
+        'startDateTime': startDateTime,
+        'endDateTime': endDateTime,
+        'userId': user.uid,
+      });
+    }
+  }
+
+  Future<void> updateEventInFirestore(String eventId, String eventName, DateTime startDateTime, DateTime endDateTime) async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      await _firestore.collection('events').doc(eventId).update({
+        'eventName': eventName,
+        'startDateTime': startDateTime,
+        'endDateTime': endDateTime,
+        'userId': user.uid,
+      });
+    }
+  }
+}
+
+

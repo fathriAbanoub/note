@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:notes/data/firestore.dart';
 import 'package:notes/screen/Category_Detail_Page.dart';
-import './Category_Notes.dart';
+
 import '../widget/Stream_Category_notes.dart';
 
 class CategoryPage extends StatefulWidget {
+  const CategoryPage({super.key});
+
   @override
   _CategoryPageState createState() => _CategoryPageState();
 }
@@ -28,10 +30,10 @@ class _CategoryPageState extends State<CategoryPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Edit Category'),
+        title: const Text('Edit Category'),
         content: TextField(
           controller: _categoryController,
-          decoration: InputDecoration(labelText: 'Category Name'),
+          decoration: const InputDecoration(labelText: 'Category Name'),
         ),
         actions: [
           TextButton(
@@ -43,7 +45,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 Navigator.pop(context);
               }
             },
-            child: Text('Save'),
+            child: const Text('Save'),
           ),
         ],
       ),
@@ -54,15 +56,15 @@ class _CategoryPageState extends State<CategoryPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Delete Category'),
-        content: Text('Are you sure you want to delete this category?'),
+        title: const Text('Delete Category'),
+        content: const Text('Are you sure you want to delete this category?'),
         actions: [
           TextButton(
             onPressed: () async {
               await _firestoreDatasource.deleteCategory(id);
               Navigator.pop(context);
             },
-            child: Text('Delete'),
+            child: const Text('Delete'),
           ),
         ],
       ),
@@ -73,7 +75,7 @@ class _CategoryPageState extends State<CategoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Categories'),
+        title: const Text('Categories'),
         backgroundColor: Colors.blueAccent,
       ),
       body: Column(
@@ -87,7 +89,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 }
 
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 }
 
                 final categories = snapshot.data!.docs;
@@ -115,7 +117,7 @@ class _CategoryPageState extends State<CategoryPage> {
                       child: ListTile(
                         title: Text(categoryName),
                         trailing: IconButton(
-                          icon: Icon(Icons.edit, color: Colors.red),
+                          icon: const Icon(Icons.edit, color: Colors.red),
                           onPressed: () =>
                               _editCategory(categoryId, categoryName),
                         ),
@@ -127,7 +129,7 @@ class _CategoryPageState extends State<CategoryPage> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  CategoryDetailPage(categoryId: categoryId),
+                                  CategoryDetailPage(categoryId: categoryId, categoryName: categoryName,),
                             ),
                           );
                         },
@@ -142,7 +144,7 @@ class _CategoryPageState extends State<CategoryPage> {
             StreamNoteCategory(
               categoryId: categoryId!,
             ), // Display notes within the category
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -151,10 +153,10 @@ class _CategoryPageState extends State<CategoryPage> {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: Text('Add Category'),
+              title: const Text('Add Category'),
               content: TextField(
                 controller: _categoryController,
-                decoration: InputDecoration(labelText: 'Category Name'),
+                decoration: const InputDecoration(labelText: 'Category Name'),
               ),
               actions: [
                 TextButton(
@@ -162,14 +164,14 @@ class _CategoryPageState extends State<CategoryPage> {
                     _addCategory();
                     Navigator.pop(context);
                   },
-                  child: Text('Add'),
+                  child: const Text('Add'),
                 ),
               ],
             ),
           );
         },
         backgroundColor: Colors.blueAccent,
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

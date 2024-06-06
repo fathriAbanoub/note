@@ -4,16 +4,16 @@ import 'package:notes/data/auth_data.dart';
 
 class SignUp_Screen extends StatefulWidget {
   final VoidCallback show;
-  SignUp_Screen(this.show, {super.key});
+  const SignUp_Screen(this.show, {super.key});
 
   @override
   State<SignUp_Screen> createState() => _SignUp_ScreenState();
 }
 
 class _SignUp_ScreenState extends State<SignUp_Screen> {
-  FocusNode _focusNode1 = FocusNode();
-  FocusNode _focusNode2 = FocusNode();
-  FocusNode _focusNode3 = FocusNode();
+  final FocusNode _focusNode1 = FocusNode();
+  final FocusNode _focusNode2 = FocusNode();
+  final FocusNode _focusNode3 = FocusNode();
 
   final email = TextEditingController();
   final password = TextEditingController();
@@ -45,18 +45,18 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               image(),
-              SizedBox(height: 50),
-              textfield(email, _focusNode1, 'Электронная почта', Icons.email),
-              SizedBox(height: 10),
-              textfield(password, _focusNode2, 'Пароль', Icons.password),
-              SizedBox(height: 10),
-              textfield(PasswordConfirm, _focusNode3, 'подтвердите пароль',
+              const SizedBox(height: 50),
+              textfield(email, _focusNode1, 'Email', Icons.email),
+              const SizedBox(height: 10),
+              textfield(password, _focusNode2, 'Password', Icons.password),
+              const SizedBox(height: 10),
+              textfield(PasswordConfirm, _focusNode3, 'Confirm  Password',
                   Icons.password),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               account(),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               SignUP_bottom(),
             ],
           ),
@@ -72,14 +72,14 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Text(
-            "У Вас Есть Аккаунт ?",
+            "Do You Have An Account ?",
             style: TextStyle(color: Colors.grey[700], fontSize: 14),
           ),
-          SizedBox(width: 5),
+          const SizedBox(width: 5),
           GestureDetector(
             onTap: widget.show,
-            child: Text(
-              'Вход',
+            child: const Text(
+              'Login',
               style: TextStyle(
                   color: Colors.blue,
                   fontSize: 14,
@@ -107,8 +107,8 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
             color: custom_green,
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Text(
-            'Зарегистрироваться',
+          child: const Text(
+            'Register',
             style: TextStyle(
               color: Colors.white,
               fontSize: 23,
@@ -120,7 +120,7 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
     );
   }
 
-  Widget textfield(TextEditingController _controller, FocusNode _focusNode,
+  Widget textfield(TextEditingController controller, FocusNode focusNode,
       String typeName, IconData iconss) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -130,20 +130,21 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
           borderRadius: BorderRadius.circular(15),
         ),
         child: TextField(
-          controller: _controller,
-          focusNode: _focusNode,
-          style: TextStyle(fontSize: 18, color: Colors.black),
+          controller: controller,
+          focusNode: focusNode,
+          style: const TextStyle(fontSize: 18, color: Colors.black),
           decoration: InputDecoration(
               prefixIcon: Icon(
                 iconss,
-                color: _focusNode.hasFocus ? custom_green : Color(0xffc5c5c5),
+                color:
+                    focusNode.hasFocus ? custom_green : const Color(0xffc5c5c5),
               ),
               contentPadding:
-                  EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                  const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               hintText: typeName,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(
+                borderSide: const BorderSide(
                   color: Color(0xffc5c5c5),
                   width: 2.0,
                 ),
@@ -168,7 +169,7 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
         height: 250,
         decoration: BoxDecoration(
           color: backgroundColors,
-          image: DecorationImage(
+          image: const DecorationImage(
             image: AssetImage('images/111.jpg'),
             fit: BoxFit.fitWidth,
           ),
