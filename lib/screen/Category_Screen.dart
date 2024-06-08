@@ -3,8 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:notes/data/firestore.dart';
 import 'package:notes/screen/Category_Detail_Page.dart';
 
-import '../widget/Stream_Category_notes.dart';
-
 class CategoryPage extends StatefulWidget {
   const CategoryPage({super.key});
 
@@ -12,11 +10,9 @@ class CategoryPage extends StatefulWidget {
   _CategoryPageState createState() => _CategoryPageState();
 }
 
-class _CategoryPageState extends State {
+class _CategoryPageState extends State<CategoryPage> {
   final Firestore_Datasource _firestoreDatasource = Firestore_Datasource();
   final TextEditingController _categoryController = TextEditingController();
-
-  String? categoryId; // Define categoryId variable
 
   void _addCategory() async {
     if (_categoryController.text.isNotEmpty) {
@@ -80,78 +76,64 @@ class _CategoryPageState extends State {
         title: const Text('Categories'),
         backgroundColor: Colors.blueAccent,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: StreamBuilder(
-              stream: _firestoreDatasource.streamCategories(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
-                }
+      body: StreamBuilder(
+        stream: _firestoreDatasource.streamCategories(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          }
 
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-                final categories = snapshot.data!.docs;
+          final categories = snapshot.data!.docs;
 
-                return ListView.builder(
-                  itemCount: categories.length,
-                  itemBuilder: (context, index) {
-                    final category = categories[index];
-                    final categoryName = category['name'];
-                    final categoryId = category.id;
+          return ListView.builder(
+            itemCount: categories.length,
+            itemBuilder: (context, index) {
+              final category = categories[index];
+              final categoryName = category['name'];
+              final categoryId = category.id;
 
-                    return Dismissible(
-                      key: Key(categoryId),
-                      direction: DismissDirection.endToStart,
-                      onDismissed: (direction) async {
-                        await _firestoreDatasource.deleteCategory(categoryId);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Category $categoryName deleted'),
-                            backgroundColor: Colors.red,
-                          ),
-                        );
-                      },
-                      background: Container(color: Colors.red),
-                      child: ListTile(
-                        title: Text(categoryName),
-                        trailing: Semantics(
-                          label: 'Edit button. Double tap to edit the category.',
-                          child: IconButton(
-                            icon: const Icon(Icons.edit, color: Colors.red),
-                            onPressed: () => _editCategory(categoryId, categoryName),
-                          ),
+              return Dismissible(
+                key: Key(categoryId),
+                direction: DismissDirection.endToStart,
+                onDismissed: (direction) async {
+                  await _firestoreDatasource.deleteCategory(categoryId);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Category $categoryName deleted'),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                },
+                background: Container(color: Colors.red),
+                child: ListTile(
+                  title: Text(categoryName),
+                  trailing: Semantics(
+                    label: 'Edit button. Double tap to edit the category.',
+                    child: IconButton(
+                      icon: const Icon(Icons.edit, color: Colors.red),
+                      onPressed: () => _editCategory(categoryId, categoryName),
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CategoryDetailPage(
+                          categoryId: categoryId,
+                          categoryName: categoryName,
                         ),
-                        onTap: () {
-                          setState(() {
-                            this.categoryId = categoryId;
-                          });
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CategoryDetailPage(
-                                categoryId: categoryId,
-                                categoryName: categoryName,
-                              ),
-                            ),
-                          );
-                        },
                       ),
                     );
                   },
-                );
-              },
-            ),
-          ),
-          if (categoryId != null)
-            StreamNoteCategory(
-              categoryId: categoryId!,
-            ), // Display notes within the category
-          const SizedBox(height: 20),
-        ],
+                ),
+              );
+            },
+          );
+        },
       ),
       floatingActionButton: Semantics(
         label: 'Add Category button. Double tap to add a new category.',
