@@ -181,6 +181,7 @@ class Firestore_Datasource {
     try {
       var uuid = const Uuid().v4();
       DateTime now = DateTime.now();
+      print('Attempting to add note: $title'); // Debug statement
       await _firestore
           .collection('users')
           .doc(_auth.currentUser!.uid)

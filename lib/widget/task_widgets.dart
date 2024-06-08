@@ -59,16 +59,22 @@ class _Task_WidgetState extends State<Task_Widget> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Checkbox(
-                          activeColor: custom_green,
-                          value: isDone,
-                          onChanged: (value) {
-                            setState(() {
-                              isDone = !isDone;
-                            });
-                            Firestore_Datasource()
-                                .isdone(widget._note.id, isDone);
-                          },
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Semantics(
+                            label: 'Task completion checkbox. Double tap to mark the task as ${isDone ? 'incomplete' : 'complete'}.',
+                            child: Checkbox(
+                              activeColor: custom_green,
+                              value: isDone,
+                              onChanged: (value) {
+                                setState(() {
+                                  isDone = !isDone;
+                                });
+                                Firestore_Datasource()
+                                    .isdone(widget._note.id, isDone);
+                              },
+                            ),
+                          ),
                         )
                       ],
                     ),

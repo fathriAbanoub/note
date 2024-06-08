@@ -39,32 +39,36 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
         child: NotificationListener<UserScrollNotification>(
           onNotification: (notification) {
             if (notification.direction == ScrollDirection.forward) {
-              print('Scrolling forward');
-              setState(() {
-                show = true;
-                print('Show updated: $show');
-              });
+              setState(() => show = true);
             }
             if (notification.direction == ScrollDirection.reverse) {
-              print('Scrolling reverse');
-              setState(() {
-                show = false;
-                print('Show updated: $show');
-              });
+              setState(() => show = false);
             }
             return true;
           },
           child: Column(
             children: [
-              StreamNoteCategory(categoryId: widget.categoryId), // Display notes from StreamNoteCategory
-              Text(
-                'isDone',
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey.shade500,
-                    fontWeight: FontWeight.bold),
+              Expanded(
+                child: StreamNoteCategory(
+                  categoryId: widget.categoryId,
+                  isDone: false,
+                ),
               ),
-              StreamNoteCategory( categoryId: widget.categoryId), // Display notes from StreamNoteCategory for done notes
+              const SizedBox(height: 8),
+              const Text(
+                'Done',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Expanded(
+                child: StreamNoteCategory(
+                  categoryId: widget.categoryId,
+                  isDone: true,
+                ),
+              ),
             ],
           ),
         ),

@@ -86,7 +86,7 @@ class _Calendar_PageState extends State<Calendar_Page> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Add/Edit Event'),
+          title: const Text('Add'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[

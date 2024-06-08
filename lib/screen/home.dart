@@ -45,7 +45,7 @@ class _Home_ScreenState extends State<Home_Screen> {
           children: [
             Semantics(
               label:
-              'главная страница коснитесь дважды для перехода на главную страницу',
+              'Category page double tap to activate',
               button: true,
               child: Visibility(
                 visible: show,
@@ -64,7 +64,7 @@ class _Home_ScreenState extends State<Home_Screen> {
               ),
             ),
             Semantics(
-              label: 'кнопка календаря дважды нажмите чтобы активировать',
+              label: 'Calendar button double tap to activate',
               button: true,
               child: Visibility(
                 visible: show,
@@ -82,7 +82,7 @@ class _Home_ScreenState extends State<Home_Screen> {
             ),
             Semantics(
               label:
-              'добавления кнопка коснитесь дважды для добавления заметки',
+              'Add button double tap to activate',
               button: true,
               child: Visibility(
                 visible: show,
@@ -128,7 +128,7 @@ class _Home_ScreenState extends State<Home_Screen> {
                 false,
               ),
               Text(
-                'isDone',
+                'Done',
                 style: TextStyle(
                     fontSize: 16,
                     color: Colors.grey.shade500,

@@ -59,15 +59,22 @@ class _add_NoteState extends State<add_Note> {
                   );
                 },
                 background: Container(color: Colors.red),
-                child: ListTile(
-                  leading: Image.asset(
-                      'images/$noteImageIndex.png'), // Display the selected image
-                  title: Text(noteTitle),
-                  subtitle: Text(noteSubtitle),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.edit, color: Colors.red),
-                    onPressed: () => _editNote(
-                        noteId, noteTitle, noteSubtitle, noteImageIndex),
+                child: Semantics(
+                  label: 'Note with title $noteTitle and description $noteSubtitle',
+                  child: ListTile(
+                    leading: Semantics(
+                      label: 'Image for note $noteTitle',
+                      child: Image.asset('images/$noteImageIndex.png'), // Display the selected image
+                    ),
+                    title: Text(noteTitle),
+                    subtitle: Text(noteSubtitle),
+                    trailing: Semantics(
+                      label: 'Edit note $noteTitle',
+                      child: IconButton(
+                        icon: const Icon(Icons.edit, color: Colors.red),
+                        onPressed: () => _editNote(noteId, noteTitle, noteSubtitle, noteImageIndex),
+                      ),
+                    ),
                   ),
                 ),
               );
@@ -75,21 +82,28 @@ class _add_NoteState extends State<add_Note> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) =>  NotesPage(categoryId: widget.categoryId, categoryName: widget.categoryName)),
-          );
-        },
-        backgroundColor: Colors.blueAccent,
-        child: const Icon(Icons.add),
+      floatingActionButton: Semantics(
+        label: 'Add a new note',
+        child: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NotesPage(categoryId: widget.categoryId, categoryName: widget.categoryName),
+              ),
+            );
+          },
+          backgroundColor: Colors.blueAccent,
+          child: const Icon(Icons.add_rounded,size: 30,color: Colors.white,
+          ),
+        ),
       ),
     );
   }
 
+
   void _editNote(String noteId, String currentTitle, String currentSubtitle,
       int currentImageIndex) {
-    // Implement your edit note functionality here
+
   }
 }

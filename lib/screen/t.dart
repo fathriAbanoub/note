@@ -51,7 +51,7 @@ class _NotesPageState extends State<NotesPage> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Semantics(
-          label: 'коснитесь дважды, чтобы добавить заметку',
+          label: 'Add button Double tap to add note',
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.greenAccent,
@@ -74,7 +74,7 @@ class _NotesPageState extends State<NotesPage> {
           ),
         ),
         Semantics(
-          label: 'коснитесь дважды, чтобы отменить',
+          label: 'Double tap to cancel',
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.redAccent,
@@ -106,20 +106,23 @@ class _NotesPageState extends State<NotesPage> {
                 indxx = index;
               });
             },
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(
-                  width: 2,
-                  color: indxx == index ? custom_green : Colors.blueAccent,
+            child: Semantics(
+              label: 'Image ${index + 1}',
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                    width: 2,
+                    color: indxx == index ? custom_green : Colors.blueAccent,
+                  ),
                 ),
-              ),
-              width: 140,
-              margin: const EdgeInsets.all(8),
-              child: Column(
-                children: [
-                  Image.asset('images/$index.png'),
-                ],
+                width: 140,
+                margin: const EdgeInsets.all(8),
+                child: Column(
+                  children: [
+                    Image.asset('images/$index.png'),
+                  ],
+                ),
               ),
             ),
           );
@@ -127,6 +130,7 @@ class _NotesPageState extends State<NotesPage> {
       ),
     );
   }
+
 
   Widget tittle_widgets() {
     return Padding(
@@ -136,26 +140,28 @@ class _NotesPageState extends State<NotesPage> {
           color: const Color.fromARGB(255, 255, 255, 255),
           borderRadius: BorderRadius.circular(15),
         ),
-        child: TextField(
-          controller: title,
-          focusNode: _focusNode1,
-          style: const TextStyle(fontSize: 18, color: Colors.black),
-          decoration: InputDecoration(
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-            hintText: 'Title',
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(
-                color: Colors.blueAccent,
-                width: 2.0,
+        child: Semantics(
+          label: 'Title input field',
+          child: TextField(
+            controller: title,
+            focusNode: _focusNode1,
+            style: const TextStyle(fontSize: 18, color: Colors.black),
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+              hintText: 'Title',
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(
+                  color: Colors.blueAccent,
+                  width: 2.0,
+                ),
               ),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(
-                color: custom_green,
-                width: 2.0,
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(
+                  color: custom_green,
+                  width: 2.0,
+                ),
               ),
             ),
           ),
@@ -163,6 +169,7 @@ class _NotesPageState extends State<NotesPage> {
       ),
     );
   }
+
 
   Padding subtitle_wedgite() {
     return Padding(
@@ -172,27 +179,29 @@ class _NotesPageState extends State<NotesPage> {
           color: const Color.fromARGB(255, 255, 255, 255),
           borderRadius: BorderRadius.circular(15),
         ),
-        child: TextField(
-          maxLines: 3,
-          controller: subtitle,
-          focusNode: _focusNode2,
-          style: const TextStyle(fontSize: 18, color: Colors.black),
-          decoration: InputDecoration(
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-            hintText: 'Description',
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(
-                color: Colors.blueAccent,
-                width: 2.0,
+        child: Semantics(
+          label: 'Description input field',
+          child: TextField(
+            maxLines: 3,
+            controller: subtitle,
+            focusNode: _focusNode2,
+            style: const TextStyle(fontSize: 18, color: Colors.black),
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+              hintText: 'Description',
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(
+                  color: Colors.blueAccent,
+                  width: 2.0,
+                ),
               ),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(
-                color: custom_green,
-                width: 2.0,
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(
+                  color: custom_green,
+                  width: 2.0,
+                ),
               ),
             ),
           ),

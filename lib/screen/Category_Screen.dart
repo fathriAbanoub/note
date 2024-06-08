@@ -12,7 +12,7 @@ class CategoryPage extends StatefulWidget {
   _CategoryPageState createState() => _CategoryPageState();
 }
 
-class _CategoryPageState extends State<CategoryPage> {
+class _CategoryPageState extends State {
   final Firestore_Datasource _firestoreDatasource = Firestore_Datasource();
   final TextEditingController _categoryController = TextEditingController();
 
@@ -31,16 +31,18 @@ class _CategoryPageState extends State<CategoryPage> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Edit Category'),
-        content: TextField(
-          controller: _categoryController,
-          decoration: const InputDecoration(labelText: 'Category Name'),
+        content: Semantics(
+          label: 'Category Name input field',
+          child: TextField(
+            controller: _categoryController,
+            decoration: const InputDecoration(labelText: 'Category Name'),
+          ),
         ),
         actions: [
           TextButton(
             onPressed: () async {
               if (_categoryController.text.isNotEmpty) {
-                await _firestoreDatasource.updateCategory(
-                    id, _categoryController.text);
+                await _firestoreDatasource.updateCategory(id, _categoryController.text);
                 _categoryController.clear();
                 Navigator.pop(context);
               }
@@ -81,7 +83,7 @@ class _CategoryPageState extends State<CategoryPage> {
       body: Column(
         children: [
           Expanded(
-            child: StreamBuilder<QuerySnapshot>(
+            child: StreamBuilder(
               stream: _firestoreDatasource.streamCategories(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
@@ -116,10 +118,12 @@ class _CategoryPageState extends State<CategoryPage> {
                       background: Container(color: Colors.red),
                       child: ListTile(
                         title: Text(categoryName),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.edit, color: Colors.red),
-                          onPressed: () =>
-                              _editCategory(categoryId, categoryName),
+                        trailing: Semantics(
+                          label: 'Edit button. Double tap to edit the category.',
+                          child: IconButton(
+                            icon: const Icon(Icons.edit, color: Colors.red),
+                            onPressed: () => _editCategory(categoryId, categoryName),
+                          ),
                         ),
                         onTap: () {
                           setState(() {
@@ -128,8 +132,10 @@ class _CategoryPageState extends State<CategoryPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  CategoryDetailPage(categoryId: categoryId, categoryName: categoryName,),
+                              builder: (context) => CategoryDetailPage(
+                                categoryId: categoryId,
+                                categoryName: categoryName,
+                              ),
                             ),
                           );
                         },
@@ -147,31 +153,37 @@ class _CategoryPageState extends State<CategoryPage> {
           const SizedBox(height: 20),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _categoryController.clear();
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: const Text('Add Category'),
-              content: TextField(
-                controller: _categoryController,
-                decoration: const InputDecoration(labelText: 'Category Name'),
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    _addCategory();
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Add'),
+      floatingActionButton: Semantics(
+        label: 'Add Category button. Double tap to add a new category.',
+        child: FloatingActionButton(
+          onPressed: () {
+            _categoryController.clear();
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text('Add Category'),
+                content: Semantics(
+                  label: 'Category Name input field',
+                  child: TextField(
+                    controller: _categoryController,
+                    decoration: const InputDecoration(labelText: 'Category Name'),
+                  ),
                 ),
-              ],
-            ),
-          );
-        },
-        backgroundColor: Colors.blueAccent,
-        child: const Icon(Icons.add),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      _addCategory();
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Add'),
+                  ),
+                ],
+              ),
+            );
+          },
+          backgroundColor: Colors.blueAccent,
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }

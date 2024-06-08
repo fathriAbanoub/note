@@ -7,24 +7,27 @@ import 'Category_Widget.dart';
 
 class StreamNoteCategory extends StatelessWidget {
   final String categoryId;
-  final bool? isDone; // Add isDone parameter
+  final bool? isDone;
+
   const StreamNoteCategory({
     required this.categoryId,
-    this.isDone, // Include isDone parameter in constructor
+    this.isDone,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
+    return StreamBuilder(
       stream: Firestore_Datasource().streamNotesInCategory(categoryId, isDone: isDone),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           print('Snapshot does not have data');
           return const CircularProgressIndicator();
         }
+
         final notesList = Firestore_Datasource().getCategoryNotes(snapshot);
-        print('Notes List Length: ${notesList.length}');
+        print('Notes List Length: ${notesList.length} for isDone: $isDone');
+
         return ListView.builder(
           shrinkWrap: true,
           itemBuilder: (context, index) {
@@ -32,8 +35,7 @@ class StreamNoteCategory extends StatelessWidget {
             return Dismissible(
               key: UniqueKey(),
               onDismissed: (direction) {
-                Firestore_Datasource()
-                    .deleteNoteInCategory(categoryId, note.id);
+                Firestore_Datasource().deleteNoteInCategory(categoryId, note.id);
               },
               child: Task_Widget_Category(note, categoryId),
             );
@@ -44,3 +46,4 @@ class StreamNoteCategory extends StatelessWidget {
     );
   }
 }
+
