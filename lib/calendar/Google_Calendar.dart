@@ -461,7 +461,7 @@ class _Calendar_PageState extends State<Calendar_Page> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          final date = DateTime.now(); // Placeholder, replace with actual date calculation
+          final date = DateTime.now(); 
           _addEvent(date);
         },
         backgroundColor: Colors.blueAccent,
